@@ -50,7 +50,6 @@ public class PhoneCodesStorage implements ApplicationRunner {
                 phoneCodesMap.put(Long.valueOf(code), countryName);
             }
         });
-        System.out.println(phoneCodesMap.keySet());
     }
 
     public String getCountryNameByCode(Long code) {
