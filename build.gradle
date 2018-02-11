@@ -1,0 +1,39 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.10.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+
+group = 'lv.edw'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.jsoup:jsoup:1.11.2'
+    implementation 'org.projectlombok:lombok:1.16.20'
+    implementation 'org.apache.commons:commons-lang3:3.7'
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.8.10'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.codehaus.groovy:groovy-all:2.4.10'
+    testImplementation 'org.spockframework:spock-spring:1.1-groovy-2.4'
+    testImplementation 'org.spockframework:spock-core:1.1-groovy-2.4'
+    testImplementation 'cglib:cglib-nodep:3.2.6'
+
+}
+

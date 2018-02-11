@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>Codes</title>
+</head>
+<body>
+<div class="container">
+    <div class="row align-items-center" style="margin-top: 15%">
+        <div class="col">
+        </div>
+        <div class="col">
+            <form id="frm">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="text" placeholder="Enter phone number">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+</div>
+<script>
+    var frm = $("#frm");
+    frm.submit(function (e) {
+        e.preventDefault();
+        var fieldValue = $("#text").val();
+        if (validate(fieldValue)) {
+            $.ajax({
+                type: 'get',
+                url: '/api/identifyCountry/' + fieldValue,
+                data: frm.serialize(),
+                dataType: 'json',
+                statusCode: {
+                    200: function (data) {
+                        var elementById = document.getElementById("resp");
+                        var resp = data['response'];
+                        if (data['responseCode'] === 200) {
+                            elementById.innerHTML = "Country: " + resp;
+                        } else {
+                            elementById.style.color = "red";
+                            elementById.innerHTML = "Error: " + resp;
+
+                        }
+                    }
+                }
+            })
+        }
+    });
+
+    function validate(text) {
+        if (text.length < 3) {
+            alert("Phone number is too short");
+            return false;
+        }
+        if (text.length > 17) {
+            alert("Phone number is too long");
+            return false;
+        }
+        return true;
+
+    }
+
+
+</script>
+<div class="container" style="margin-top: 6%">
+    <div class="row align-items-center">
+        <div class="col">
+        </div>
+        <div class="col" id="resp" style="font-size: 150%">
+        </div>
+        <div class="col">
+        </div>
+    </div>
+</div>
+</body>
+</html>
